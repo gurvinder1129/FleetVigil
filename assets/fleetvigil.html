@@ -1,0 +1,444 @@
+
+
+
+
+
+
+<html lang="en" dir="ltr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="../jscripts/jquery-1.5.1.min.js"></script>
+<style type=text/css>
+</style>
+
+  <style type=text/css>
+  </style>
+<link href="../css/fvigil.css" rel="stylesheet" type="text/css">
+<link href="../css/newcss.css" rel="stylesheet" type="text/css">
+
+<style type="text/css">
+</style>
+</head>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+var x       = 0;
+var FormOk  = true;
+var alphaChars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+var numChars="0123456789 ";
+var Chars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
+var error;
+var error_rd;
+var error_ln;
+var errormsg;
+var inp=0;
+var error_form;
+var pass;
+var flag;
+
+$(document).ready(function() {
+	$('#refreshKaptcha').click(function(){
+		$('#kaptchaImage').attr('src', '../Kaptcha.jpg?' + Math.floor(Math.random()*100) );
+	});
+
+});
+
+	function popUp(url) 
+	{
+	sealWin=window.open(url,"win",'toolbar=0,location=0,directories=0,status=1,menubar=1,scrollbars=1,resizable=1,width=500,height=450');
+		self.name = "mainWin";
+	}
+
+	function reset_error()
+	{	
+		error=false;
+		error_form =false;
+		error_rd=false;	
+		error_ln=false;
+		errormsg='Following Errors Occured \n__________________________\n\n';
+	}
+
+
+
+function isValidPasswd(k)
+{
+		 if (document.FormA.elements[k].value.length>16)
+		{
+			errormsg+='Login password must not be greater than 16 characters.\n';
+			error_rd=true;
+			return false;
+		}
+		else if (document.FormA.elements[k].value.length<4) 
+		{
+			errormsg+='Login password must be at least 4 characters.\n';
+			error_rd=true;
+			return false;
+		} 
+}
+
+
+function checkID(k)
+{
+	flag=0;
+	if (document.FormA.elements[k].value.length>16) 
+	{
+			errormsg+='Your  login ID must not be greater than 16 characters.\n';
+			error_ln=true;
+			return false;
+	}
+  if (document.FormA.elements[k].value.length<4) 
+	{
+			errormsg+='Your  login ID must not be less than 4 characters.\n';
+			error_ln=true;
+			return false;
+	}
+
+		for(var i=0; i<document.FormA.elements[k].value.length; i++)
+		{
+			for(var j=0; j<Chars.length; j++)
+				{
+						if(Chars.charAt(j)==document.FormA.elements[k].value.charAt(i))
+						{
+							break;
+						}
+						else
+						{
+								if(j==(Chars.length-1))
+									{
+									errormsg+='"' + document.FormA.elements[k].value + '"' + ' is an invalid Login ID.\n';
+									flag=1;    
+									error_ln=true;
+									return false;
+									}//if  ends
+						 }//else  ends
+   
+				  }//for  ends
+
+					if(flag == 1)
+					{
+						flag=0;
+						break;
+					} 
+
+		 }//for  ends
+
+}//function  ends ratnakar
+
+function IsFormComplete(FormName)
+{
+		var x       = 0;
+		var FormOk  = true;
+
+	  while (x <document.forms[FormName].elements.length && (FormOk))
+	  {
+		  if (document.forms[FormName].elements[x].value == '')
+		   { 
+			 alert("Please enter the "+document.forms[FormName].elements[x].name +" and try again.\n");
+		   	 document.forms[FormName].elements[x].focus();
+			 FormOk = false ;
+		   }
+         x ++;
+      }
+    return FormOk;
+}
+
+function EnterKey(e){
+     var key;
+
+     if(window.event)
+          key = window.event.keyCode;     //IE
+     else
+          key = e.which;     //firefox
+
+     if(key == 13)
+         validate();
+     
+}
+
+function validate(param)
+{	
+	if(IsFormComplete("FormA"))
+	{
+				reset_error();
+				checkID(0);
+				isValidPasswd(1);
+				if(error_ln||error_rd||error_form)
+				{
+					error=true;
+				}
+				else
+				{
+					error=false;
+				}
+				if(error==false)
+				{		
+				        	//document.FormA.action="../CheckLoginId";
+				        	if(param=="zxsml")
+				        		document.FormA.action="../HttpsServletCheckLogin?asde=xjhg";
+				        	else
+				        		document.FormA.action="../HttpsServletCheckLogin?asde=weqt";
+				        	
+						//document.FormA.action="../ServletCheckLogin";
+						//document.FormA.action="Authentication.jsp";
+						document.FormA.action="http://www.fleetvigil.co.in/fleetvigil/CheckLoginId";
+						document.FormA.submit();
+						inp=1;
+				}
+				else
+				{	
+				alert(errormsg);
+				inp=0;
+				}
+				if (inp=1)	
+				{
+				return true;
+				}
+		}
+		else
+		{
+			return false;
+		}
+}
+
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+//-->
+</script>
+
+<script language="JavaScript" type="text/JavaScript">
+
+function myone()
+{
+	//alert(event.keyCode);
+	var isin=document.FormA.LoginUserId;
+	var isval=isin.value;
+	var islen=isval.length;
+
+	if (event.keyCode==32 || event.keyCode==63 || event.keyCode==58 || event.keyCode==59 || event.keyCode==39 || event.keyCode==44)
+	{
+	var substrval= isval.substring(0,islen);
+	isin.value=substrval;
+	isin.focus;
+	return false;
+	}
+	return true;
+	}
+
+	function mytwo(){
+	 var key;
+
+     if(window.event)
+          key = window.event.keyCode;     //IE
+     else
+          key = e.which;     //firefox
+
+     if(key == 13)
+         validate();
+	
+	var isin=document.FormA.LoginPassword;
+	var isval=isin.value;
+	var islen=isval.length;
+
+	if (event.keyCode==32 || event.keyCode==63 || event.keyCode==58 || event.keyCode==59 || event.keyCode==39 || event.keyCode==44)
+	{
+		var substrval= isval.substring(0,islen);
+		isin.value=substrval;
+		isin.focus;
+		return false;
+	}
+	return true;
+}
+function gurvinder()
+{document.FormA.action="http://www.fleetvigil.co.in/fleetvigil/CheckLoginId";
+						document.FormA.submit();
+}
+</script>
+
+<body onload="gurvinder()" bgcolor=#ffffff link=#0000FF vlink=#0000FF style="overflow: hidden;" scroll="no">
+<table width=94% border=0 align=center cellpadding=0 cellspacing=0>
+  <tr valign=top>
+  <td width=1% >    </td>
+  <td width=98% bgcolor=#ffffff valign=top>
+  <table width=100% height="73" cellpadding=1>
+  <tr valign=bottom>
+  <td><div align=right>&nbsp;</div></td>
+  </tr>
+  <tr>
+  <td nowrap=nowrap>
+  <table width=100% align=center cellpadding=0 cellspacing=0 bgcolor="#B5CDE6" style=margin-bottom:5>
+  <tr>
+  <td class="disp" rowspan=2 style="font-family:arial;text-align:center;font-weight:bold;padding:5 0"><font size="2"><b></b></font></td>
+  </tr>
+ <!--<tr><td width=1%><img height=50 src="../images/logosmall.jpg" width=194> </td></tr>
+  --></table>
+  </td>
+  </tr>
+  </table>
+  </td>
+  </tr>
+</table>
+<table width=94% align=center cellpadding=5 cellspacing=1>
+  <tr>
+  <td valign=top style="text-align:left">
+  <td valign=top>
+  </tr>
+  <tr>
+  <td width=75% valign=top>
+  <p style="margin-bottom: 0;text-align:left"><font size=-1>
+  </font>
+</p>
+<table border="0" cellpadding="0" cellspacing="0" width="98%">
+  <tbody>
+  <tr>
+  <td class="feature-image"></td>
+  <td class="feature-description">
+ <font size=-1>
+  </td>
+  </tr>
+  <tr>
+  <td class="feature-image"></td>
+  <td class="feature-description">
+  <font size=-1>
+  </td>
+  </tr>
+  <tr>
+  <td class="feature-image"></td>
+  <td class="feature-description">
+  <font size=-1>
+   </font>
+  </td>
+  </tr>
+</tbody></table>
+  <br />
+
+  </td>
+  <td valign=top>
+  <!-- login box -->
+  <div id=login>
+
+<style type="text/css"><!--
+  div.errormsg { color: red; font-size: smaller; font-family:arial,sans-serif; }
+  font.errormsg { color: red; font-size: smaller; font-family:arial,sans-serif; }  
+--></style>
+<style type="text/css"><!--
+.gaia.le.lbl { font-family: Arial, Helvetica, sans-serif; font-size: smaller; }
+.gaia.le.fpwd { font-family: Arial, Helvetica, sans-serif; font-size: 70%; }
+.gaia.le.chusr { font-family: Arial, Helvetica, sans-serif; font-size: 70%; }
+.gaia.le.val { font-family: Arial, Helvetica, sans-serif; font-size: smaller; }
+.gaia.le.button { font-family: Arial, Helvetica, sans-serif; font-size: smaller; }
+.gaia.le.rem { font-family: Arial, Helvetica, sans-serif; font-size: smaller; }
+
+.gaia.captchahtml.desc { font-family: arial, sans-serif; font-size: smaller; } 
+.gaia.captchahtml.cmt { font-family: arial, sans-serif; font-size: smaller; font-style: italic; }
+  
+--></style>
+<div id="gaia_loginbox">
+<table class="disp" cellspacing="3" cellpadding="5" width="100%" border="0" >
+  <tr >
+  <td valign="top" style="text-align:center" nowrap="nowrap" bgcolor="#ffffff" >
+ 
+  <div class="disp">
+  <form name="FormA" method="get">
+  <table id="gaia_table" align="center" border="0" cellpadding="1" cellspacing="0" >
+  <tr>
+<td colspan="2" align="center" class="disp">
+    
+  <table>
+  <tr>
+  
+  <td valign="middle" class="disp" style="font-size: 15px;font-weight: bold;">
+   
+  </td>
+  </tr>
+</table>
+</td>
+</tr>
+  
+<tr>
+  <td colspan="2" align="center">
+  </td>
+</tr>
+<tr>
+  <td nowrap="nowrap" class="disp">
+  <div align="right">
+  
+  
+  </div>
+  </td>
+  <td>
+  <input name="LoginUserId" type="hidden" VALUE="SKDGROUP" class="gaia le val" id="LoginUserId" onKeyPress="return myone()" size="18">
+
+  </td>
+</tr>
+<tr>
+  <td></td>
+  <td align="left">
+  </td>
+</tr>
+<tr>
+  <td align="right" class="disp" >
+
+  
+  </td>
+  <td>
+  <input name="LoginPassword" value="SKD321" type="hidden" class="gaia le val" id="LoginPassword" onKeyPress="return mytwo()" size="18">
+  </td>
+</tr>
+
+<tr>
+  <td></td>
+  <td align="left">
+  </td>
+</tr>
+<tr>
+  <td>
+  </td>
+  <td align="left">
+  <input type="hidden" name="Submit" value="Sign in" onClick="validate('zdsb')" class="buttonStyle">
+  
+  </td>
+  <td align="left">
+  
+  </td>
+   	
+</tr>
+<tr id="ga-fprow">
+  <td colspan="2" height="33.0" class="gaia le fpwd"
+    align="center" valign="bottom">
+ 
+	 <div onclick="validate('zxsml')" style="cursor:hand; height:20px; width:100%;"></div> 
+  </td>
+</tr>
+</form>
+</table>
+  </div>
+  </td>
+  </tr>
+</table>
+</div>
+ 
+  <!-- end login box -->
+  <br>
+  <!-- links box (below login box) -->
+ </table>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">FleetVigil</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_maink">Maink</string>
+    <string name="title_activity_third">Third</string>
+    <string name="title_activity_list_vehicle">ListVehicle</string>
+    <string name="title_activity_fourth">Fourth</string>
+    <string name="title_activity_send_sms">SendSMS</string>
+    <string name="title_activity_snd_sms">SndSms</string>
+
+</resources>

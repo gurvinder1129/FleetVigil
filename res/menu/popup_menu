@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/one"
+        android:title="Locate on Map"/>
+	
+	<item
+        android:id="@+id/two"
+        android:title="Contact Driver"/>
+      
+    <item
+        android:id="@+id/three"
+        android:title="Refresh"/>
+    <item
+        android:id="@+id/four"
+        android:title="Exit"/>
+        
+</menu>
